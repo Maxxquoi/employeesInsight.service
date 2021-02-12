@@ -32,6 +32,8 @@ namespace employees.webapi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "employees.webapi", Version = "v1" });
             });
+
+            InitializeEmployeesDb(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +56,11 @@ namespace employees.webapi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        protected virtual void InitializeEmployeesDb(IServiceCollection services)
+        {
+            services.AddDbContext<EmployeesDb>(opt => opt.UseInMemoryDatabase("EmployeesInfo"));
         }
     }
 }
