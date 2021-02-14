@@ -2,7 +2,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace employeesInsight.data.Entities.User.Configuration
+namespace employeesInsight.data.Entities.Member.Configuration
 {
     public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {

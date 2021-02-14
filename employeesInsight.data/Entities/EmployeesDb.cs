@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using employeesInsight.data.Entities.User;
-using employeesInsight.data.Entities.User.Configuration;
+using employeesInsight.data.Entities.Member;
+using employeesInsight.data.Entities.Member.Configuration;
 
 namespace employeesInsight.data.Entities
 {
