@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using employeesInsight.data.Entities;
-using employeesInsight.data.Entities.User;
+using employeesInsight.data.Entities.Member;
 
 namespace employeesInsight.data.unit.tests.DataAccess
 {
@@ -17,8 +17,7 @@ namespace employeesInsight.data.unit.tests.DataAccess
 
             db.Employees.Add(new Employee
             {
-                Id = 100,
-                EmployeeId = new Guid("066f2deb-d25d-44e6-9116-bac34e0b58fe"),
+                EmployeeId = Guid.Parse("066f2deb-d25d-44e6-9116-bac34e0b58fe"),
                 FirstName = "Larry",
                 LastName = "Bailey",
                 Email = "LarryBailey@here.com",
@@ -34,8 +33,7 @@ namespace employeesInsight.data.unit.tests.DataAccess
 
             db.Employees.Add(new Employee
             {
-                Id = 103,
-                EmployeeId = new Guid("77751f1a-0bcc-4187-9c24-f0658e2e899f"),
+                EmployeeId = Guid.Parse("77751f1a-0bcc-4187-9c24-f0658e2e899f"),
                 FirstName = "Mary",
                 LastName = "Leeper",
                 Email = "MaryLeeper@here.com",
@@ -50,8 +48,7 @@ namespace employeesInsight.data.unit.tests.DataAccess
 
             db.Employees.Add(new Employee
             {
-                Id = 106,
-                EmployeeId = new Guid("6251a09c-3d49-44b8-80f8-681365ad6173"),
+                EmployeeId = Guid.Parse("6251a09c-3d49-44b8-80f8-681365ad6173"),
                 FirstName = "George",
                 LastName = "Lockwood",
                 Email = "GeorgeLockwood@here.com",

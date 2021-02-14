@@ -1,8 +1,8 @@
 using System;
 
-namespace employeesInsight.data.Dtos.User
+namespace employeesInsight.data.Entities.Member
 {
-    public class EmployeeDto
+    public class Employee
     {
         public long Id { get; set; }
         public Guid EmployeeId { get; set; }
