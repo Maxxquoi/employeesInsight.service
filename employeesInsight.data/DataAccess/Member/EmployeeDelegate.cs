@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -13,6 +14,7 @@ using employeesInsight.data.Entities.Member;
 using employeesInsight.data.Dtos.Member;
 using employeesInsight.data.Exceptions;
 using employeesInsight.data.Exceptions.Member;
+using Z.EntityFramework.Plus;
 
 namespace employeesInsight.data.DataAccess.Member
 {
@@ -111,6 +113,36 @@ namespace employeesInsight.data.DataAccess.Member
 
             var count = query.Count();
             return (await _mapper.ProjectTo<EmployeeDto>(query).ToListAsync(), count);
+        }
+
+        public virtual async Task<EmployeeDto> DeleteEmployeeAsync(Guid employeeId)
+        {
+            var employee = await (from e in _db.Employees where e.EmployeeId == employeeId select e).FirstOrDefaultAsync();
+
+            if (employee == null)
+            {
+                throw new EmployeeNotFoundException(employeeId.ToString());
+            }
+
+            await _db.Employees.Where(e => e.EmployeeId == employeeId).DeleteAsync();
+            await _db.SaveChangesAsync();
+
+            var filteredEntity = new Employee
+            {
+                EmployeeId = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Email = employee.Email,
+                Age = employee.Age,
+                SSN = employee.SSN,
+                BirthDate = employee.BirthDate,
+                Company = employee.Company,
+                Position = employee.Position,
+                Salary = employee.Salary,
+                Active = employee.Active
+            };
+
+            return _mapper.Map<EmployeeDto>(filteredEntity);
         }
     }
 }
