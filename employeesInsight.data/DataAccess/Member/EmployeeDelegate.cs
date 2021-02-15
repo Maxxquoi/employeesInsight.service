@@ -37,7 +37,7 @@ namespace employeesInsight.data.DataAccess.Member
                 {
                     employee = new Employee
                     {
-                        EmployeeId = employeeDto.EmployeeId,
+                        EmployeeId = employeeDto?.EmployeeId ?? Guid.NewGuid(),
                         FirstName = employeeDto.FirstName,
                         LastName = employeeDto.LastName,
                         Email = employeeDto.Email,
@@ -80,9 +80,7 @@ namespace employeesInsight.data.DataAccess.Member
 
         public virtual async Task<EmployeeDto> GetEmployeeAsync(Guid employeeId)
         {
-            var employee = await (from e in _db.Employees
-                                  where e.EmployeeId == employeeId
-                                  select e).FirstOrDefaultAsync();
+            var employee = await (from e in _db.Employees where e.EmployeeId == employeeId select e).FirstOrDefaultAsync();
 
             if (employee == null)
             {
@@ -105,6 +103,14 @@ namespace employeesInsight.data.DataAccess.Member
             };
 
             return _mapper.Map<EmployeeDto>(filteredEntity);
+        }
+
+        public virtual async Task<(List<EmployeeDto> employees, int available)> GetEmployeesAsync()
+        {
+            var query = (from e in _db.Employees select e).Distinct();
+
+            var count = query.Count();
+            return (await _mapper.ProjectTo<EmployeeDto>(query).ToListAsync(), count);
         }
     }
 }
