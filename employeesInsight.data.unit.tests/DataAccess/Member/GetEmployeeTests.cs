@@ -46,7 +46,7 @@ namespace employeesInsight.data.unit.tests.DataAccess.Member
             Func<Task> act = async () => { await employeeDelegate.GetEmployeeAsync(employeeId); };
 
             //Assertions
-            await act.Should().ThrowAsync<EmployeeNotFoundException>().WithMessage($"Unable to locate the employee [{employeeId.ToString()}]");
+            await act.Should().ThrowAsync<EmployeeNotFoundException>().WithMessage($"Unable to locate the employee [{employeeId}]");
         }
 
         private EmployeeDelegate GetEmployeeDelegate(EmployeesDb db)
