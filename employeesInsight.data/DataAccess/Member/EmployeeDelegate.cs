@@ -144,5 +144,94 @@ namespace employeesInsight.data.DataAccess.Member
 
             return _mapper.Map<EmployeeDto>(filteredEntity);
         }
+
+        public virtual async Task<EmployeeDto> UpdateEmployeeAsync(EmployeeDto employeeDto)
+        {
+            var employee = await (from e in _db.Employees where e.EmployeeId == employeeDto.EmployeeId select e).FirstOrDefaultAsync();
+
+            if (employee == null)
+            {
+                throw new EmployeeNotFoundException(employeeDto.EmployeeId.ToString());
+            }
+
+            var somethingChanged = ExecuteIfChanged(employee.FirstName, employeeDto.FirstName, firstName => employee.FirstName = firstName)
+                                    | ExecuteIfChanged(employee.LastName, employeeDto.LastName, lastName => employee.LastName = lastName)
+                                    | ExecuteIfChanged(employee.Email, employeeDto.Email, email => employee.Email = email)
+                                    | ExecuteIfChanged(employee.Age, employeeDto.Age, age => employee.Age = age)
+                                    | ExecuteIfChanged(employee.SSN, employeeDto.SSN, ssn => employee.SSN = ssn)
+                                    | ExecuteIfChanged(employee.BirthDate, employeeDto.BirthDate, birthDate => employee.BirthDate = birthDate)
+                                    | ExecuteIfChanged(employee.Company, employeeDto.Company, company => employee.Company = company)
+                                    | ExecuteIfChanged(employee.Position, employeeDto.Position, position => employee.Position = position)
+                                    | ExecuteIfChanged(employee.Salary, employeeDto.Salary, salary => employee.Salary = salary)
+                                    | ExecuteIfChanged(employee.Active, employeeDto.Active, active => employee.Active = active);
+
+            if (somethingChanged)
+            {
+                _db.Entry(employee).State = EntityState.Modified;
+            }
+
+            await _db.SaveChangesAsync();
+            return _mapper.Map<EmployeeDto>(employee);
+        }
+
+        private static bool ExecuteIfChanged(string oldValue, string newValue, Action<string> propertySetter)
+        {
+            if (string.IsNullOrEmpty(newValue) || string.Equals(newValue, oldValue, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return false;
+            }
+
+            propertySetter(newValue);
+            return true;
+        }
+
+        private static bool ExecuteIfChanged(int oldValue, int newValue, Action<int> propertySetter)
+        {
+
+            if (newValue <= 0 || newValue == oldValue)
+            {
+                return false;
+            }
+
+            propertySetter(newValue);
+            return true;
+        }
+
+
+        private static bool ExecuteIfChanged(DateTime oldValue, DateTime newValue, Action<DateTime> propertySetter)
+        {
+
+            if (newValue == DateTime.MinValue || newValue.Equals(oldValue))
+            {
+                return false;
+            }
+
+            propertySetter(newValue);
+            return true;
+        }
+
+        private static bool ExecuteIfChanged(double oldValue, double newValue, Action<double> propertySetter)
+        {
+
+            if (newValue <= 0 || newValue.Equals(oldValue))
+            {
+                return false;
+            }
+
+            propertySetter(newValue);
+            return true;
+        }
+
+        private static bool ExecuteIfChanged(bool oldValue, bool newValue, Action<bool> propertySetter)
+        {
+
+            if (newValue.Equals(oldValue))
+            {
+                return false;
+            }
+
+            propertySetter(newValue);
+            return true;
+        }
     }
 }
