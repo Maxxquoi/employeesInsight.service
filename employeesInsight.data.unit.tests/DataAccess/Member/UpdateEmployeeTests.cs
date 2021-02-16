@@ -70,7 +70,6 @@ namespace employeesInsight.data.unit.DataAccess.Member
             };
 
             //SUT
-            // var newEmployee = await employeeDelegate.UpdateEmployeeAsync(employeeDto);
             Func<Task> act = async () => { await employeeDelegate.UpdateEmployeeAsync(employeeDto); };
 
             //Assertions
