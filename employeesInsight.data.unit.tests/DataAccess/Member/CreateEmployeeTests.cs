@@ -3,12 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AutoMapper;
 using FluentAssertions;
-using employeesInsight.data.unit.tests.DataAccess;
 using employeesInsight.data.DataAccess.Member;
 using employeesInsight.data.Entities;
 using employeesInsight.data.Dtos.Member;
 
-namespace employeesInsight.data.unit.DataAccess.Member
+namespace employeesInsight.data.unit.tests.DataAccess.Member
 {
     [TestClass]
     public class CreateEmployeeTests

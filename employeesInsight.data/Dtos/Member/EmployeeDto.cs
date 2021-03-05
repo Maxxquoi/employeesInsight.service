@@ -6,8 +6,6 @@ namespace employeesInsight.data.Dtos.Member
 {
     public class EmployeeDto
     {
-        [Required]
-        [NotEmpty]
         public Guid EmployeeId { get; set; }
 
         [Required]

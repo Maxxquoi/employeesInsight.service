@@ -10,11 +10,9 @@ namespace employeesInsight.data.Entities.Member.Configuration
         {
             builder.ToTable("Employees", "User");
 
-            builder.HasKey(e => e.Id).HasName("PK_Employees");
+            builder.HasKey(e => e.EmployeeId).HasName("PK_Employees");
 
-            builder.Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
-
-            builder.Property(e => e.EmployeeId).IsRequired();
+            builder.Property(e => e.EmployeeId).IsRequired().ValueGeneratedOnAdd();
 
             builder.Property(e => e.FirstName).IsRequired().HasMaxLength(200).IsUnicode();
 
@@ -39,7 +37,6 @@ namespace employeesInsight.data.Entities.Member.Configuration
             builder.HasData(
                 new Employee
                 {
-                    Id = 100,
                     EmployeeId = new Guid("066f2deb-d25d-44e6-9116-bac34e0b58fe"),
                     FirstName = "Larry",
                     LastName = "Bailey",
@@ -55,7 +52,6 @@ namespace employeesInsight.data.Entities.Member.Configuration
                 },
                 new Employee
                 {
-                    Id = 103,
                     EmployeeId = new Guid("77751f1a-0bcc-4187-9c24-f0658e2e899f"),
                     FirstName = "Mary",
                     LastName = "Leeper",
@@ -70,7 +66,6 @@ namespace employeesInsight.data.Entities.Member.Configuration
                 },
                 new Employee
                 {
-                    Id = 106,
                     EmployeeId = new Guid("6251a09c-3d49-44b8-80f8-681365ad6173"),
                     FirstName = "George",
                     LastName = "Lockwood",

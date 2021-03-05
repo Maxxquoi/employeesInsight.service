@@ -7,10 +7,6 @@ namespace employeesInsight.webapi.v1.ViewModels.Member
     public class CreateEmployeeDto
     {
         [Required]
-        [NotEmpty]
-        public Guid EmployeeId { get; set; }
-
-        [Required]
         [MinLength(1)]
         public string FirstName { get; set; }
 

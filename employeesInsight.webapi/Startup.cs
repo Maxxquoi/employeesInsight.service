@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using employeesInsight.data.DataAccess.Member;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,7 +13,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using AutoMapper;
 using employeesInsight.data.Entities;
+using employeesInsight.data.Dtos.Member.Mappings;
 
 
 namespace employeesInsight.webapi
@@ -29,13 +33,31 @@ namespace employeesInsight.webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSingleton(Log.Logger);
+            
             services.AddControllers();
+
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+            });
+            
+            services.AddVersionedApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+            
+                options.SubstituteApiVersionInUrl = true;
+            });
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "employeesInsight.webapi", Version = "v1" });
             });
 
+            services.AddAutoMapper(typeof(EmployeeProfile), typeof(Startup));
+
+            services.AddScoped<EmployeeDelegate>();
+            
             InitializeEmployeesDb(services);
         }
 
