@@ -39,7 +39,7 @@ namespace employeesInsight.data.DataAccess.Member
                 {
                     employee = new Employee
                     {
-                        EmployeeId = employeeDto?.EmployeeId ?? Guid.NewGuid(),
+                        EmployeeId = employeeDto.EmployeeId,
                         FirstName = employeeDto.FirstName,
                         LastName = employeeDto.LastName,
                         Email = employeeDto.Email,

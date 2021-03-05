@@ -1,13 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using employeesInsight.data.Validation;
-
-namespace employeesInsight.data.Dtos.Member
+    
+namespace employeesInsight.webapi.v1.ViewModels.Member
 {
-    public class EmployeeDto
+    public class CreateEmployeeDto
     {
-        public Guid EmployeeId { get; set; }
-
         [Required]
         [MinLength(1)]
         public string FirstName { get; set; }
